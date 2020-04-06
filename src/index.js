@@ -19,11 +19,7 @@ wasmFs.fs.createWriteStream('/dev/stderr', 'utf8').on('data', data => {
 })
 
 const startWasiTask = async () => {
-  const response = await fetch("LifeGameWeb.wasm");
-  const responseArrayBuffer = await response.arrayBuffer();
-
-  const wasm_bytes = new Uint8Array(responseArrayBuffer).buffer;
-  let { instance } = await WebAssembly.instantiate(wasm_bytes, {
+  let { instance } = await WebAssembly.instantiateStreaming(fetch("LifeGameWeb.wasm"), {
     wasi_snapshot_preview1: wasi.wasiImport,
     javascript_kit: swift.importObjects(),
   });
