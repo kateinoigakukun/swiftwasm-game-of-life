@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: macOS-10.15
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -21,7 +21,7 @@ jobs:
           eval "$(swiftenv init -)"
           swiftenv install $TOOLCHAIN_DOWNLOAD
         env:
-          TOOLCHAIN_DOWNLOAD: https://github.com/swiftwasm/swift/releases/download/swift-wasm-DEVELOPMENT-SNAPSHOT-2020-04-01-a/swift-wasm-DEVELOPMENT-SNAPSHOT-2020-04-01-a-linux.tar.gz
+          TOOLCHAIN_DOWNLOAD: https://github.com/swiftwasm/swift/releases/download/swift-wasm-DEVELOPMENT-SNAPSHOT-2020-04-01-a/swift-wasm-DEVELOPMENT-SNAPSHOT-2020-04-01-a-osx.tar.gz
       - run: npm ci
       - run: |
           export SWIFTENV_ROOT="$HOME/.swiftenv"
