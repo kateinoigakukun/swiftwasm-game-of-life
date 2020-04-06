@@ -23,7 +23,10 @@ jobs:
         env:
           TOOLCHAIN_DOWNLOAD: https://github.com/swiftwasm/swift/releases/download/swift-wasm-DEVELOPMENT-SNAPSHOT-2020-04-01-a/swift-wasm-DEVELOPMENT-SNAPSHOT-2020-04-01-a-linux.tar.gz
       - run: npm ci
-      - run: npm run build
+      - run: |
+          export SWIFTENV_ROOT="$HOME/.swiftenv"
+          export PATH="$SWIFTENV_ROOT/bin:$PATH"
+          npm run build
       - run: npx netlify-cli deploy --dir=./dist
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
