@@ -26,6 +26,7 @@ class App: BoardUpdater {
     }
 
     func start() {
+        guard self.timer == nil else { return }
         let fn = JSFunctionRef.from { [weak self] _ in
             self?.iterate()
             return .undefined
