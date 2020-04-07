@@ -13,4 +13,10 @@ $ npm run start
 
 ## Development
 
+```sh
+$ swift package --package-path LifeGame generate-xcodeproj
+$ open LifeGame/LifeGame.xcodeproj
+$ npm run start
+```
+
 ![](./assets/life-game-dev.gif)
