@@ -11,9 +11,7 @@ https://life-game-with-swiftwasm.netlify.com/
 ## Bootstrap
 
 ```sh
-$ cd LifeGame
 $ swiftenv install https://github.com/swiftwasm/swift/releases/download/swift-wasm-DEVELOPMENT-SNAPSHOT-2020-04-05-a/swift-wasm-DEVELOPMENT-SNAPSHOT-2020-04-05-a-osx.tar.gz
-$ cd ..
 $ npm install
 $ npm run start
 ```
