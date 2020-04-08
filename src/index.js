@@ -14,7 +14,7 @@ let wasi = new WASI({
   }
 });
 
-wasmFs.fs.createWriteStream('/dev/stderr', 'utf8').on('data', data => {
+wasmFs.fs.createReadStream('/dev/stderr', 'utf8').on('data', data => {
   console.error(data.toString());
 })
 
