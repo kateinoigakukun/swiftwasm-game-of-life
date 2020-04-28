@@ -13,18 +13,17 @@ module.exports = {
     path: outputPath,
   },
   devServer: {
-    inline: true,
     watchContentBase: true,
     contentBase: [
       path.join(__dirname, 'public'),
-      path.join(__dirname, 'dist'),
+      outputPath,
     ],
   },
   plugins: [
     new SwiftWebpackPlugin({
       packageDirectory: path.join(__dirname, 'LifeGame'),
       target: 'LifeGameWeb',
-      dist: path.join(__dirname, "dist")
+      dist: outputPath
     }),
     new HtmlWebpackPlugin({
       template: path.resolve('./public/index.html'),
