@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const SwiftWebpackPlugin = require('@swiftwasm/swift-webpack-plugin')
 
 const outputPath = path.resolve(__dirname, 'dist');
+const staticPath = path.resolve(__dirname, 'static');
 
 module.exports = {
   entry: './src/index.js',
@@ -15,7 +16,7 @@ module.exports = {
   devServer: {
     watchContentBase: true,
     contentBase: [
-      path.join(__dirname, 'public'),
+      staticPath,
       outputPath,
     ],
   },
@@ -26,7 +27,7 @@ module.exports = {
       dist: outputPath
     }),
     new HtmlWebpackPlugin({
-      template: path.resolve('./public/index.html'),
+      template: staticPath,
     }),
   ],
 };
