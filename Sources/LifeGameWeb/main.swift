@@ -27,10 +27,8 @@ class App: BoardUpdater {
     }
 
     func start() {
-        print(#function)
         guard self.timer == nil else { return }
         let timerClosure = JSClosure { [weak self] _ in
-            print("timerClosure body")
             self?.iterate()
             return .undefined
         }
@@ -39,7 +37,6 @@ class App: BoardUpdater {
     }
 
     func stop() {
-        print(#function)
         guard let timer = self.timer else { return }
         _ = JSObjectRef.global.clearInterval!(timer)
         self.timer = nil
