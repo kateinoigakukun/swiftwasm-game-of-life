@@ -6,22 +6,25 @@ https://life-game-with-swiftwasm.netlify.com/
 
 ## Requirements
 
-- [kylef/swiftenv: Swift Version Manager](https://github.com/kylef/swiftenv)
-
-## Bootstrap
+- Xcode 11.4 or later on macOS Catalina, or Swift 5.2 or later on Linux.
+- [carton](https://carton.dev), which can be installed on macOS via [Homebrew](https://brew.sh/):
 
 ```sh
-$ swiftenv install https://github.com/swiftwasm/swift/releases/download/swift-wasm-DEVELOPMENT-SNAPSHOT-2020-04-05-a/swift-wasm-DEVELOPMENT-SNAPSHOT-2020-04-05-a-osx.tar.gz
-$ npm install
-$ npm run start
+$ brew install swiftwasm/tap/carton
 ```
+
+You'll have to build carton from sources on Linux. Clone the repository and run 
+`swift build -c release`, the `carton` binary will be located in the `.build/release` 
+directory after that.
 
 ## Development
 
 ```sh
-$ swift package --package-path LifeGame generate-xcodeproj
-$ open LifeGame/LifeGame.xcodeproj
-$ npm run start
+$ carton dev
 ```
+
+Open [http://127.0.0.1:8080/](http://127.0.0.1:8080/) after the initial build process has completed.
+If you change the source code, `carton` will rebuild it and reload your browser tab as it watches
+for changes.
 
 ![](./assets/life-game-dev.gif)

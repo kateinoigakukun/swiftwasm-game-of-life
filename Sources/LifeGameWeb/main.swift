@@ -6,6 +6,7 @@ class App: BoardUpdater {
     let canvas: BoardCanvas
 
     var timer: JSValue?
+    var timerClosure: JSClosure?
 
     init(initial: [[Cell]], canvas: BoardCanvas) {
         self.cells = initial
@@ -26,18 +27,24 @@ class App: BoardUpdater {
     }
 
     func start() {
+        print(#function)
         guard self.timer == nil else { return }
-        let fn = JSFunctionRef.from { [weak self] _ in
+        let timerClosure = JSClosure { [weak self] _ in
+            print("timerClosure body")
             self?.iterate()
             return .undefined
         }
-        self.timer = JSObjectRef.global.setInterval!(fn, 50)
+        self.timer = JSObjectRef.global.setInterval!(timerClosure, 50)
+        self.timerClosure = timerClosure
     }
 
     func stop() {
+        print(#function)
         guard let timer = self.timer else { return }
         _ = JSObjectRef.global.clearInterval!(timer)
         self.timer = nil
+        self.timerClosure?.release()
+        self.timerClosure = nil
     }
 }
 
@@ -53,6 +60,26 @@ func initialCells() -> [[Cell]] {
 }
 
 let document = JSObjectRef.global.document.object!
+let head = document.head.object!
+head.innerHTML = #"""
+<title>Life Game</title>
+<style>
+  body {
+    background-color: black;
+  }
+</style>
+"""#
+
+let body = document.body.object!
+document.body.object!.innerHTML = #"""
+  <canvas id="app-canvas"></canvas>
+  <div>
+    <button id="app-step-button">Next</button>
+    <button id="app-start-button">Start</button>
+    <button id="app-stop-button">Stop</button>
+    <button id="app-reset-button">Reset</button>
+  </div>
+"""#
 let canvas = document.getElementById!("app-canvas").object!
 let iterateButton = document.getElementById!("app-step-button").object!
 let startButton = document.getElementById!("app-start-button").object!
@@ -63,22 +90,26 @@ let initial = initialCells()
 let boardView = BoardCanvas(canvas: canvas, size: (width, height))
 var lifeGame = App(initial: initial, canvas: boardView)
 
-iterateButton.onclick = .function { _ in
+let iterateHandler = JSClosure { _ in
     lifeGame.iterate()
     return .undefined
 }
+iterateButton.onclick = .function(iterateHandler)
 
-startButton.onclick = .function { _ in
+let startHandler = JSClosure { _ in
     lifeGame.start()
     return .undefined
 }
+startButton.onclick = .function(startHandler)
 
-stopButton.onclick = .function { _ in
+let stopHandler = JSClosure { _ in
     lifeGame.stop()
     return .undefined
 }
+stopButton.onclick = .function(stopHandler)
 
-resetButton.onclick = .function { _ in
+let resetHandler = JSClosure { _ in
     lifeGame = App(initial: initialCells(), canvas: boardView)
     return .undefined
 }
+resetButton.onclick = .function(resetHandler)
