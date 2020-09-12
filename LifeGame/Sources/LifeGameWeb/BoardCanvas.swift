@@ -12,8 +12,8 @@ class BoardCanvas {
 
     init(canvas: JSObjectRef, size: (width: Int, height: Int)) {
         context = canvas.getContext!("2d").object!
-        canvas.width = .number(Int32(width * (cellSize + boarderWidth)))
-        canvas.height = .number(Int32(height * (cellSize + boarderWidth)))
+        canvas.width = .number(Double(width * (cellSize + boarderWidth)))
+        canvas.height = .number(Double(height * (cellSize + boarderWidth)))
     }
 
     fileprivate func getCellRect(at point: Point) -> (x: Int, y: Int, width: Int, height: Int) {
