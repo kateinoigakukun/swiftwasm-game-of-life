@@ -27,7 +27,7 @@ module.exports = {
       dist: outputPath
     }),
     new HtmlWebpackPlugin({
-      template: staticPath,
+      template: path.join(staticPath, 'index.html'),
     }),
   ],
 };
