@@ -12,8 +12,8 @@ let package = Package(
     dependencies: [
         .package(
             name: "JavaScriptKit",
-            url: "https://github.com/kateinoigakukun/JavaScriptKit.git",
-            from: "0.5.0"
+            url: "https://github.com/swiftwasm/JavaScriptKit.git",
+            from: "0.6.0"
         ),
     ],
     targets: [

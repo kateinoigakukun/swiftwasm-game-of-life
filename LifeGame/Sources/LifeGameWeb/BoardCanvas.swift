@@ -3,14 +3,14 @@ import LifeGame
 
 class BoardCanvas {
 
-    let context: JSObjectRef
+    let context: JSObject
 
     let cellSize = 6
     let boarderWidth = 1
 
     let liveColor = "#29fd2f"
 
-    init(canvas: JSObjectRef, size: (width: Int, height: Int)) {
+    init(canvas: JSObject, size: (width: Int, height: Int)) {
         context = canvas.getContext!("2d").object!
         canvas.width = .number(Double(width * (cellSize + boarderWidth)))
         canvas.height = .number(Double(height * (cellSize + boarderWidth)))

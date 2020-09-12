@@ -27,16 +27,16 @@ class App: BoardUpdater {
 
     func start() {
         guard self.timer == nil else { return }
-        let fn = JSClosure { [weak self] _ in
+        let fn = JSClosure { [weak self] _ -> JSValue in
             self?.iterate()
             return .undefined
         }
-        self.timer = JSObjectRef.global.setInterval!(fn, 50)
+        self.timer = JSObject.global.setInterval!(fn, 50)
     }
 
     func stop() {
         guard let timer = self.timer else { return }
-        _ = JSObjectRef.global.clearInterval!(timer)
+        _ = JSObject.global.clearInterval!(timer)
         self.timer = nil
     }
 }
@@ -52,7 +52,7 @@ func initialCells() -> [[Cell]] {
     }
 }
 
-let document = JSObjectRef.global.document.object!
+let document = JSObject.global.document.object!
 let canvas = document.getElementById!("app-canvas").object!
 let iterateButton = document.getElementById!("app-step-button").object!
 let startButton = document.getElementById!("app-start-button").object!
