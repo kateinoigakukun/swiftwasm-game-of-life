@@ -39,7 +39,7 @@ const startWasiTask = async () => {
 
   const { instance } = await WebAssembly.instantiateStreaming(response, importObject);
 
-  swift.setInsance(instance);
+  swift.setInstance(instance);
   wasi.start(instance);
 };
 

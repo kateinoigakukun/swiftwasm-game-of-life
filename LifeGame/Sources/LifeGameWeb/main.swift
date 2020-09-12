@@ -6,6 +6,9 @@ class App: BoardUpdater {
     let canvas: BoardCanvas
 
     var timer: JSValue?
+    lazy var tickFn = JSClosure { [weak self] _ in
+        self?.iterate()
+    }
 
     init(initial: [[Cell]], canvas: BoardCanvas) {
         self.cells = initial
@@ -27,16 +30,13 @@ class App: BoardUpdater {
 
     func start() {
         guard self.timer == nil else { return }
-        let fn = JSClosure { [weak self] _ -> JSValue in
-            self?.iterate()
-            return .undefined
-        }
-        self.timer = JSObject.global.setInterval!(fn, 50)
+        self.timer = JSObject.global.setInterval!(tickFn, 50)
     }
 
     func stop() {
         guard let timer = self.timer else { return }
         _ = JSObject.global.clearInterval!(timer)
+        tickFn.release()
         self.timer = nil
     }
 }
@@ -63,22 +63,23 @@ let initial = initialCells()
 let boardView = BoardCanvas(canvas: canvas, size: (width, height))
 var lifeGame = App(initial: initial, canvas: boardView)
 
-iterateButton.onclick = .function { _ in
+let iterateFn = JSClosure { _ in
     lifeGame.iterate()
-    return .undefined
 }
 
-startButton.onclick = .function { _ in
+let startFn = JSClosure { _ in
     lifeGame.start()
-    return .undefined
 }
 
-stopButton.onclick = .function { _ in
+let stopFn = JSClosure { _ in
     lifeGame.stop()
-    return .undefined
 }
 
-resetButton.onclick = .function { _ in
+let resetFn = JSClosure { _ in
     lifeGame = App(initial: initialCells(), canvas: boardView)
-    return .undefined
 }
+
+iterateButton.onclick = .function(iterateFn)
+startButton.onclick = .function(startFn)
+stopButton.onclick = .function(stopFn)
+resetButton.onclick = .function(resetFn)
