@@ -10,7 +10,11 @@ let package = Package(
             targets: ["LifeGame"]),
     ],
     dependencies: [
-      .package(name: "JavaScriptKit", url: "https://github.com/kateinoigakukun/JavaScriptKit.git", .branch("master")),
+        .package(
+            name: "JavaScriptKit",
+            url: "https://github.com/kateinoigakukun/JavaScriptKit.git",
+            from: "0.5.0"
+        ),
     ],
     targets: [
         .target(
