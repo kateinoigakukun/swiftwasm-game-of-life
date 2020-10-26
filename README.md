@@ -6,22 +6,14 @@ https://life-game-with-swiftwasm.netlify.com/
 
 ## Requirements
 
-- [kylef/swiftenv: Swift Version Manager](https://github.com/kylef/swiftenv)
-
-## Bootstrap
-
-```sh
-$ swiftenv install https://github.com/swiftwasm/swift/releases/download/swift-wasm-5.3-SNAPSHOT-2020-08-20-a/swift-wasm-5.3-SNAPSHOT-2020-08-20-a-osx.tar.gz
-$ npm install
-$ npm run start
-```
+- [swiftwasm/carton: SwiftWasm Tool](https://github.com/swiftwasm/carton)
 
 ## Development
 
 ```sh
 $ swift package --package-path LifeGame generate-xcodeproj
 $ open LifeGame/LifeGame.xcodeproj
-$ npm run start
+$ carton dev --custom-index-page static/index.html
 ```
 
 ![](./assets/life-game-dev.gif)
