@@ -1,6 +1,6 @@
 # LifeGame with SwiftWasm
 
-https://life-game-with-swiftwasm.netlify.com/
+https://kateinoigakukun.github.io/swiftwasm-game-of-life/
 
 **:warning: Please wait 15sec while loading**
 
