@@ -6,3 +6,8 @@ node_modules
 /*.xcodeproj
 xcuserdata/
 .netlify
+.DS_Store
+/.build
+/Packages
+/*.xcodeproj
+xcuserdata/
