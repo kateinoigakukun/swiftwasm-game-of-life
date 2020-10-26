@@ -9,8 +9,8 @@ https://kateinoigakukun.github.io/swiftwasm-game-of-life/
 ## Development
 
 ```sh
-$ swift package --package-path LifeGame generate-xcodeproj
-$ open LifeGame/LifeGame.xcodeproj
+$ swift package generate-xcodeproj
+$ open LifeGame.xcodeproj
 $ carton dev --custom-index-page static/index.html
 ```
 
