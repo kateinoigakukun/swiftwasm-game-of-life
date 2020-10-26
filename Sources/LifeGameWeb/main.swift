@@ -52,12 +52,12 @@ func initialCells() -> [[Cell]] {
     }
 }
 
-let document = JSObject.global.document.object!
-let canvas = document.getElementById!("app-canvas").object!
-let iterateButton = document.getElementById!("app-step-button").object!
-let startButton = document.getElementById!("app-start-button").object!
-let stopButton = document.getElementById!("app-stop-button").object!
-let resetButton = document.getElementById!("app-reset-button").object!
+let document = JSObject.global.document
+let canvas = document.getElementById("app-canvas").object!
+var iterateButton = document.getElementById("app-step-button")
+var startButton = document.getElementById("app-start-button")
+var stopButton = document.getElementById("app-stop-button")
+var resetButton = document.getElementById("app-reset-button")
 
 let initial = initialCells()
 let boardView = BoardCanvas(canvas: canvas, size: (width, height))
