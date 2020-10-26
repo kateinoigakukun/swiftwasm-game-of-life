@@ -2,8 +2,6 @@
 
 https://kateinoigakukun.github.io/swiftwasm-game-of-life/
 
-**:warning: Please wait 15sec while loading**
-
 ## Requirements
 
 - [swiftwasm/carton: SwiftWasm Tool](https://github.com/swiftwasm/carton)
