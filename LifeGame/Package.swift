@@ -13,7 +13,7 @@ let package = Package(
         .package(
             name: "JavaScriptKit",
             url: "https://github.com/swiftwasm/JavaScriptKit.git",
-            from: "0.6.0"
+            from: "0.8.0"
         ),
     ],
     targets: [
