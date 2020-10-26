@@ -1,0 +1,19 @@
+name: Deploy
+on:
+  push:
+    branches: [master]
+jobs:
+  deploy:
+    runs-on: macOS-latest
+    name: Deploy artifacts
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install carton
+      run: brew install swiftwasm/tap/carton
+    - name: Bundle
+      run: carton bundle --custom-index-page static/index.html
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./Bundle
