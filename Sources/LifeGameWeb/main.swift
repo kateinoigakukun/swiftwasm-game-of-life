@@ -36,7 +36,6 @@ class App: BoardUpdater {
     func stop() {
         guard let timer = self.timer else { return }
         _ = JSObject.global.clearInterval!(timer)
-        tickFn.release()
         self.timer = nil
     }
 }
