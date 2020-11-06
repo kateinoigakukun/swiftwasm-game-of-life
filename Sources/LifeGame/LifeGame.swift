@@ -1,4 +1,4 @@
-public struct Cell {
+public struct Cell: Equatable {
     public let live: Bool
     public init(live: Bool) {
         self.live = live
