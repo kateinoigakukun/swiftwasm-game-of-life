@@ -1,0 +1,14 @@
+name: Run unit tests
+on:
+  pull_request:
+  push:
+    branches: [main]
+jobs:
+  test:
+    name: Build and Test
+    runs-on: Ubuntu-20.04
+    container:
+      image: ghcr.io/swiftwasm/carton
+    steps:
+      - uses: actions/checkout@v2
+      - run: carton test
