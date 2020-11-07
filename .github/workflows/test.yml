@@ -11,7 +11,4 @@ jobs:
       image: ghcr.io/swiftwasm/carton
     steps:
       - uses: actions/checkout@v2
-      - name: Run Test
-        run: |
-          make bootstrap
-          make test
+      - run: carton test
