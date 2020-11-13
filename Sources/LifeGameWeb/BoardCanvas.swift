@@ -18,8 +18,8 @@ class BoardCanvas {
 
     fileprivate func getCellRect(at point: Point) -> (x: Int, y: Int, width: Int, height: Int) {
         (
-            point.x * (cellSize + 1),
-            point.y * (cellSize + 1),
+            point.x * (cellSize + boarderWidth),
+            point.y * (cellSize + boarderWidth),
             cellSize, cellSize
         )
     }
