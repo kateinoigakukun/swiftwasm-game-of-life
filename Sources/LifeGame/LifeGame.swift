@@ -32,6 +32,14 @@ public struct Rule {
 public func iterate<U: BoardUpdater>(_ cells: [[Cell]], updater: U, rule: Rule) {
     let height = cells.count
     let width = cells[0].count
+
+    let birthFlags = (0...8).map({ value in
+        return rule.birth.contains(value)
+    })
+    let surviveFlags = (0...8).map({ value in
+        return rule.survive.contains(value)
+    })
+    
     forEachCell(cells) { cell, point in
         var liveCount = 0
         for dy in [-1, 0, 1] {
@@ -47,9 +55,9 @@ public func iterate<U: BoardUpdater>(_ cells: [[Cell]], updater: U, rule: Rule) 
         }
 
         if !cell.live {
-            guard rule.birth.contains(liveCount) else { return }
+            guard birthFlags[liveCount] == true else { return }
             updater.update(at: point, cell: Cell(live: true))
-        } else if (!rule.survive.contains(liveCount)) {
+        } else if (surviveFlags[liveCount] == false) {
             updater.update(at: point, cell:  Cell(live: false))
         }
     }
