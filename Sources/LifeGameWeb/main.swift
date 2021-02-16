@@ -24,6 +24,12 @@ class App: BoardUpdater {
         canvas.drawCell(cell, at: point)
     }
 
+    func noUpdate(at point: Point, cell: Cell) {
+        if (canvas.shouldDrawCellOnNoUpdate) {
+            canvas.drawCell(cell, at: point)
+        }
+    }
+
     func iterate() {
         LifeGame.iterate(cells, updater: self)
     }
@@ -59,7 +65,19 @@ var stopButton = document.getElementById("app-stop-button")
 var resetButton = document.getElementById("app-reset-button")
 
 let initial = initialCells()
-let boardView = BoardCanvas(canvas: canvas, size: (width, height))
+
+var canvasTypeSelect = document.getElementById("app-canvas-type")
+
+func canvasForType(_ type: String) -> BoardCanvas {
+    switch type {
+        case "persisted":
+            return PersistedBoardCanvas(canvas: canvas, size: (width, height))
+        default:
+            return BasicBoardCanvas(canvas: canvas, size: (width, height))
+    }
+}
+
+var boardView = canvasForType(canvasTypeSelect.value.string!)
 var lifeGame = App(initial: initial, canvas: boardView)
 
 let iterateFn = JSClosure { _ in
@@ -78,7 +96,15 @@ let resetFn = JSClosure { _ in
     lifeGame = App(initial: initialCells(), canvas: boardView)
 }
 
+let updateBoardFn = JSClosure { _ in
+    boardView = canvasForType(canvasTypeSelect.value.string!)
+    lifeGame = App(initial: initialCells(), canvas: boardView)
+    return nil
+}
+
 iterateButton.onclick = .function(iterateFn)
 startButton.onclick = .function(startFn)
 stopButton.onclick = .function(stopFn)
 resetButton.onclick = .function(resetFn)
+
+canvasTypeSelect.onchange = .function(updateBoardFn)
