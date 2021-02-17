@@ -42,10 +42,7 @@ class App: BoardUpdater {
     }
 }
 
-let width = 50
-let height = 50
-
-func initialCells() -> [[Cell]] {
+func initialCells(width: Int, height: Int) -> [[Cell]] {
     (0..<height).map { _ in
         (0..<width).map { _ in
             Cell(live: Bool.random())
@@ -64,12 +61,15 @@ var resetButton = document.getElementById("app-reset-button")
 var ruleSelect = document.getElementById("app-rule")
 var ruleCustomBirth = document.getElementById("app-rule-custom-birth")
 var ruleCustomSurvive = document.getElementById("app-rule-custom-survive")
-
 var rule = try Rule(ruleString: ruleSelect.value.string!)
 
+var controlsContainer = document.getElementById("app-controls-container")
+
+let width = Int(document.body.clientWidth.number!) / (BoardCanvas.cellSize + BoardCanvas.boarderWidth)
+let height = Int(document.body.clientHeight.number! - controlsContainer.clientHeight.number!) / (BoardCanvas.cellSize + BoardCanvas.boarderWidth)
 let boardView = BoardCanvas(canvas: canvas, size: (width, height))
 
-var lifeGame = App(initial: initialCells(), canvas: boardView, rule: rule)
+var lifeGame = App(initial: initialCells(width: width, height: height), canvas: boardView, rule: rule)
 
 let iterateFn = JSClosure { _ in
     lifeGame.iterate()
@@ -87,7 +87,7 @@ let stopFn = JSClosure { _ in
 }
 
 let resetFn = JSClosure { _ in
-    lifeGame = App(initial: initialCells(), canvas: boardView, rule: rule)
+    lifeGame = App(initial: initialCells(width: width, height: height), canvas: boardView, rule: rule)
     return nil
 }
 
@@ -104,7 +104,7 @@ let updateRuleFn = JSClosure { _ in
 
         rule = try! Rule(ruleString: ruleSelect.value.string!)
     }
-    lifeGame = App(initial: initialCells(), canvas: boardView, rule: rule)
+    lifeGame = App(initial: initialCells(width: width, height: height), canvas: boardView, rule: rule)
     return nil
 }
 

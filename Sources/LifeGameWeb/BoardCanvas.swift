@@ -5,22 +5,22 @@ class BoardCanvas {
 
     let context: JSObject
 
-    let cellSize = 6
-    let boarderWidth = 1
+    static let cellSize = 6
+    static let boarderWidth = 1
 
     let liveColor = "#29fd2f"
 
     init(canvas: JSObject, size: (width: Int, height: Int)) {
         context = canvas.getContext!("2d").object!
-        canvas.width = .number(Double(width * (cellSize + boarderWidth)))
-        canvas.height = .number(Double(height * (cellSize + boarderWidth)))
+        canvas.width = .number(Double(width * (BoardCanvas.cellSize + BoardCanvas.boarderWidth)))
+        canvas.height = .number(Double(height * (BoardCanvas.cellSize + BoardCanvas.boarderWidth)))
     }
 
     fileprivate func getCellRect(at point: Point) -> (x: Int, y: Int, width: Int, height: Int) {
         (
-            point.x * (cellSize + boarderWidth),
-            point.y * (cellSize + boarderWidth),
-            cellSize, cellSize
+            point.x * (BoardCanvas.cellSize + BoardCanvas.boarderWidth),
+            point.y * (BoardCanvas.cellSize + BoardCanvas.boarderWidth),
+            BoardCanvas.cellSize, BoardCanvas.cellSize
         )
     }
 
