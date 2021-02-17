@@ -40,10 +40,7 @@ class App: BoardUpdater {
     }
 }
 
-let width = 50
-let height = 50
-
-func initialCells() -> [[Cell]] {
+func initialCells(width: Int, height: Int) -> [[Cell]] {
     (0..<height).map { _ in
         (0..<width).map { _ in
             Cell(live: Bool.random())
@@ -58,9 +55,13 @@ var startButton = document.getElementById("app-start-button")
 var stopButton = document.getElementById("app-stop-button")
 var resetButton = document.getElementById("app-reset-button")
 
-let initial = initialCells()
+var controlsContainer = document.getElementById("app-controls-container")
+
+let width = Int(document.body.clientWidth.number!) / (BoardCanvas.cellSize + BoardCanvas.boarderWidth)
+let height = Int(document.body.clientHeight.number! - controlsContainer.clientHeight.number!) / (BoardCanvas.cellSize + BoardCanvas.boarderWidth)
 let boardView = BoardCanvas(canvas: canvas, size: (width, height))
-var lifeGame = App(initial: initial, canvas: boardView)
+
+var lifeGame = App(initial: initialCells(width: width, height: height), canvas: boardView)
 
 let iterateFn = JSClosure { _ in
     lifeGame.iterate()
@@ -75,7 +76,7 @@ let stopFn = JSClosure { _ in
 }
 
 let resetFn = JSClosure { _ in
-    lifeGame = App(initial: initialCells(), canvas: boardView)
+    lifeGame = App(initial: initialCells(width: width, height: height), canvas: boardView)
 }
 
 iterateButton.onclick = .function(iterateFn)
