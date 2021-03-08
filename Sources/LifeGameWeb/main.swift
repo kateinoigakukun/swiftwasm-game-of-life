@@ -46,10 +46,7 @@ class App: BoardUpdater {
     }
 }
 
-let width = 50
-let height = 50
-
-func initialCells() -> [[Cell]] {
+func initialCells(width: Int, height: Int) -> [[Cell]] {
     (0..<height).map { _ in
         (0..<width).map { _ in
             Cell(live: Bool.random())
@@ -64,9 +61,12 @@ var startButton = document.getElementById("app-start-button")
 var stopButton = document.getElementById("app-stop-button")
 var resetButton = document.getElementById("app-reset-button")
 
-let initial = initialCells()
+var controlsContainer = document.getElementById("app-controls-container")
 
 var canvasTypeSelect = document.getElementById("app-canvas-type")
+
+let width = Int(document.body.clientWidth.number!) / (BasicBoardCanvas.cellSize + BasicBoardCanvas.boarderWidth)
+let height = Int(document.body.clientHeight.number! - controlsContainer.clientHeight.number!) / (BasicBoardCanvas.cellSize + BasicBoardCanvas.boarderWidth)
 
 func canvasForType(_ type: String) -> BoardCanvas {
     switch type {
@@ -78,7 +78,8 @@ func canvasForType(_ type: String) -> BoardCanvas {
 }
 
 var boardView = canvasForType(canvasTypeSelect.value.string!)
-var lifeGame = App(initial: initial, canvas: boardView)
+
+var lifeGame = App(initial: initialCells(width: width, height: height), canvas: boardView)
 
 let iterateFn = JSClosure { _ in
     lifeGame.iterate()
@@ -93,12 +94,13 @@ let stopFn = JSClosure { _ in
 }
 
 let resetFn = JSClosure { _ in
-    lifeGame = App(initial: initialCells(), canvas: boardView)
+    lifeGame = App(initial: initialCells(width: width, height: height), canvas: boardView)
 }
 
 let updateBoardFn = JSClosure { _ in
     boardView = canvasForType(canvasTypeSelect.value.string!)
-    lifeGame = App(initial: initialCells(), canvas: boardView)
+
+    lifeGame = App(initial: initialCells(width: width, height: height), canvas: boardView)
     return nil
 }
 
