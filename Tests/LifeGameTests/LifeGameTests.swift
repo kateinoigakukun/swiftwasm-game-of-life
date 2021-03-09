@@ -45,7 +45,7 @@ final class LifeGameTests: XCTestCase {
         ]
         for testCase in testCases {
             let board = VirtualBoard(from: testCase.from)
-            iterate(board.cells, updater: board)
+            iterate(board.cells, updater: board, rule: Rule(birth: [3], survive: [2, 3]))
             XCTAssertEqual(toString(from: board.cells),
                            testCase.next, line: testCase.line)
         }
