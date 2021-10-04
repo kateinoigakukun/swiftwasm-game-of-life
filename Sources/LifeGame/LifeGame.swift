@@ -21,7 +21,6 @@ public struct Rule {
     public init(birth: [Int], survive: [Int]) {
         self.birth = birth
         self.survive = survive
-        print("\(self.birth) \(self.survive)")
     }
 
     public init(ruleString: String) throws {

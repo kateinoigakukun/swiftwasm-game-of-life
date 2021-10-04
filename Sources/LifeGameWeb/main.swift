@@ -73,15 +73,17 @@ var controlsContainer = document.getElementById("app-controls-container")
 
 var canvasTypeSelect = document.getElementById("app-canvas-type")
 
+var liveColorInput = document.getElementById("app-live-color")
+
 let width = Int(document.body.clientWidth.number!) / (BasicBoardCanvas.cellSize + BasicBoardCanvas.boarderWidth)
 let height = Int(document.body.clientHeight.number! - controlsContainer.clientHeight.number!) / (BasicBoardCanvas.cellSize + BasicBoardCanvas.boarderWidth)
 
 func canvasForType(_ type: String) -> BoardCanvas {
     switch type {
         case "persisted":
-            return PersistedBoardCanvas(canvas: canvas, size: (width, height))
+            return PersistedBoardCanvas(canvas: canvas, size: (width, height), liveColor: liveColorInput.value.string!)
         default:
-            return BasicBoardCanvas(canvas: canvas, size: (width, height))
+            return BasicBoardCanvas(canvas: canvas, size: (width, height), liveColor: liveColorInput.value.string!)
     }
 }
 
@@ -140,6 +142,7 @@ stopButton.onclick = .function(stopFn)
 resetButton.onclick = .function(resetFn)
 
 canvasTypeSelect.onchange = .function(updateBoardFn)
+liveColorInput.onchange = .function(updateBoardFn)
 ruleSelect.onchange = .function(updateRuleFn)
 ruleCustomBirth.onchange = .function(updateRuleFn)
 ruleCustomSurvive.onchange = .function(updateRuleFn)

@@ -7,12 +7,13 @@ public class BasicBoardCanvas: BoardCanvas {
     static let cellSize = 6
     static let boarderWidth = 1
 
-    let liveColor = "#29fd2f"
+    let liveColor: String
 
-    public required init(canvas: JSObject, size: (width: Int, height: Int)) {
+    public required init(canvas: JSObject, size: (width: Int, height: Int), liveColor: String) {
         context = canvas.getContext!("2d").object!
         canvas.width = .number(Double(width * (BasicBoardCanvas.cellSize + BasicBoardCanvas.boarderWidth)))
         canvas.height = .number(Double(height * (BasicBoardCanvas.cellSize + BasicBoardCanvas.boarderWidth)))
+        self.liveColor = liveColor
     }
 
     func getCellRect(at point: Point) -> (x: Int, y: Int, width: Int, height: Int) {
@@ -23,8 +24,8 @@ public class BasicBoardCanvas: BoardCanvas {
         )
     }
 
-    func drawPoint(at point: Point, color: JSValue) {
-        context.fillStyle = color
+    func drawPoint(at point: Point, color: String) {
+        context.fillStyle = .string(color)
         let rect = getCellRect(at: point)
         _ = context.fillRect!(rect.x, rect.y, rect.width, rect.height)
     }
@@ -40,7 +41,7 @@ public class BasicBoardCanvas: BoardCanvas {
 
     public func drawCell(_ cell: Cell, at point: Point) {
         if cell.live {
-            drawPoint(at: point, color: .string(liveColor))
+            drawPoint(at: point, color: liveColor)
         } else {
             clearPoint(at: point)
         }
