@@ -31,6 +31,9 @@ class VirtualBoard: BoardUpdater, Equatable {
     static func == (lhs: VirtualBoard, rhs: VirtualBoard) -> Bool {
         lhs.cells == rhs.cells
     }
+
+    func noUpdate(at point: Point, cell: Cell) {
+    }    
 }
 
 final class LifeGameTests: XCTestCase {

@@ -11,6 +11,7 @@ public typealias Point = (x: Int, y: Int)
 
 public protocol BoardUpdater {
     func update(at point: Point, cell: Cell)
+    func noUpdate(at point: Point, cell: Cell)
 }
 
 public struct Rule {
@@ -20,7 +21,6 @@ public struct Rule {
     public init(birth: [Int], survive: [Int]) {
         self.birth = birth
         self.survive = survive
-        print("\(self.birth) \(self.survive)")
     }
 
     public init(ruleString: String) throws {
@@ -55,10 +55,17 @@ public func iterate<U: BoardUpdater>(_ cells: [[Cell]], updater: U, rule: Rule) 
         }
 
         if !cell.live {
-            guard birthFlags[liveCount] == true else { return }
-            updater.update(at: point, cell: Cell(live: true))
-        } else if (surviveFlags[liveCount] == false) {
-            updater.update(at: point, cell:  Cell(live: false))
+            if (birthFlags[liveCount]) {
+                updater.update(at: point, cell: Cell(live: true))
+            } else {
+                updater.noUpdate(at: point, cell: cell)
+            }
+        } else {
+            if (surviveFlags[liveCount]) {
+                updater.noUpdate(at: point, cell: cell)
+            } else {
+                updater.update(at: point, cell:  Cell(live: false))
+            }
         }
     }
 }
